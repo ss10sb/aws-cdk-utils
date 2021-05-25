@@ -3,6 +3,10 @@
   "version": "0.0.1",
   "license": "MIT",
   "author": "Scott Morken <scott.morken@phoenixcollege.edu>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ss10sb/aws-cdk-utils.git"
+  },
   "main": "./lib/cjs/index.js",
   "types": "./lib/types/index.d.ts",
   "scripts": {
@@ -14,9 +18,13 @@
     "lib/**/*"
   ],
   "devDependencies": {
+    "@aws-cdk/aws-ec2": "1.105.0",
     "@types/jest": "^26.0.10",
+    "@types/lodash": "^4.14.169",
     "@types/node": "^10.17.60",
-    "aws-cdk": "1.103.0",
+    "@types/sinon": "^10.0.0",
+    "aws-cdk": "1.105.0",
+    "aws-sdk-client-mock": "^0.4.0",
     "jest": "^26.4.2",
     "ts-jest": "^26.2.0",
     "ts-node": "^9.0.0",
@@ -25,7 +33,8 @@
   "dependencies": {
     "@aws-cdk/aws-ec2": "1.105.0",
     "@aws-cdk/core": "1.105.0",
-    "@smorken/config-loader": "ss10sb/config-loader",
+    "@aws-sdk/client-ssm": "^3.15.0",
+    "lodash": "^4.17.21",
     "source-map-support": "^0.5.16"
   }
 }

@@ -1,6 +1,6 @@
 import {IVpc, Vpc} from "@aws-cdk/aws-ec2";
 import {Stack} from "@aws-cdk/core";
-import {Config} from "@smorken/config-loader";
+import {Config} from "./config";
 
 export class VpcUtils {
 
