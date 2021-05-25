@@ -2246,6 +2246,11 @@
         "signature": "a5356afa78b6981d2581d892006128d729e778fba52f8e7d5ab0d691f685899c",
         "affectsGlobalScope": false
       },
+      "../../src/newable.ts": {
+        "version": "25e469f1eafa882164ad898883d06d218be0db2cb6443f2e62ae998c78ee69da",
+        "signature": "1ff6799e38ac003805f7185d8ca0c65f86d121f9c81f7a5bd21cb112ce242ea9",
+        "affectsGlobalScope": false
+      },
       "../../node_modules/@aws-cdk/aws-iam/lib/oidc-provider.d.ts": {
         "version": "1995eed71eb90173712da8dccf1ad3aa5087f330826734a00935eccfbb81f4d1",
         "signature": "1995eed71eb90173712da8dccf1ad3aa5087f330826734a00935eccfbb81f4d1",
@@ -2771,9 +2776,14 @@
         "signature": "a13e114230077d8340c014d45dd7dc4ea356c032d762508ad0ec551f248dc2c1",
         "affectsGlobalScope": false
       },
+      "../../src/utils.ts": {
+        "version": "9fbe76fad848702850cf09872a1f826223730e2d04bb8978b43af064db5254fc",
+        "signature": "ba633b8ac3c1cf17b8f38951b20bc07b725b257b4df937cd8c872aeef34dd858",
+        "affectsGlobalScope": false
+      },
       "../../src/index.ts": {
-        "version": "84853cbe9cbe73d9df28c24e09e058821a39050ecae334af19fef3bd5b8005b5",
-        "signature": "c9f2f0f556b26b0d296405b9a8c5afd8eaeae42dfbe1ba3092fb871084509e1d",
+        "version": "ea87edc4a6379652b6e662e32365525498d3da3ebf9957357ad75bba90a749e9",
+        "signature": "d4017f0ea16b11851c7ee09ffb0cd8c3d2c8fb05889eea8b72d11352f3d371b3",
         "affectsGlobalScope": false
       },
       "../../node_modules/@babel/types/lib/index.d.ts": {
@@ -6109,7 +6119,20 @@
         "../../src/config-parameters.ts",
         "../../src/config-stack.ts",
         "../../src/config.ts",
+        "../../src/newable.ts",
+        "../../src/utils.ts",
         "../../src/vpc-utils.ts"
+      ],
+      "../../src/newable.ts": [
+        "../../node_modules/tslib/tslib.d.ts"
+      ],
+      "../../src/utils.ts": [
+        "../../node_modules/@aws-cdk/core/lib/index.d.ts",
+        "../../node_modules/tslib/tslib.d.ts",
+        "../../src/config-loader.ts",
+        "../../src/config-stack.ts",
+        "../../src/config.ts",
+        "../../src/newable.ts"
       ],
       "../../src/vpc-utils.ts": [
         "../../node_modules/@aws-cdk/aws-ec2/lib/index.d.ts",
@@ -9297,7 +9320,15 @@
         "../../src/config-parameters.ts",
         "../../src/config-stack.ts",
         "../../src/config.ts",
+        "../../src/newable.ts",
+        "../../src/utils.ts",
         "../../src/vpc-utils.ts"
+      ],
+      "../../src/utils.ts": [
+        "../../node_modules/@aws-cdk/core/lib/index.d.ts",
+        "../../src/config-stack.ts",
+        "../../src/config.ts",
+        "../../src/newable.ts"
       ],
       "../../src/vpc-utils.ts": [
         "../../node_modules/@aws-cdk/aws-ec2/lib/index.d.ts",
@@ -9885,6 +9916,8 @@
       "../../src/config-stack.ts",
       "../../src/config.ts",
       "../../src/index.ts",
+      "../../src/newable.ts",
+      "../../src/utils.ts",
       "../../src/vpc-utils.ts"
     ]
   },

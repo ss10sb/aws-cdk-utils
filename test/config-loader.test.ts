@@ -1,8 +1,7 @@
-import {ConfigLoader} from "../src";
+import {Config, ConfigLoader, ConfigParameters} from "../src";
 import * as path from 'path';
 import {mockClient} from "aws-sdk-client-mock";
 import {GetParameterCommand, SSMClient} from "@aws-sdk/client-ssm";
-import {Config, ConfigParameters} from "../lib/types";
 
 const configDir = path.resolve(__dirname, 'config');
 const ssmMock = mockClient(SSMClient);
