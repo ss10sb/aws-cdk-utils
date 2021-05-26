@@ -12,11 +12,19 @@ export class AlbUtils {
         });
     }
 
+    public static getAlbArnParamKey(config: Config, name: string = 'alb01'): string {
+        return `${AlbUtils.getBaseAlbName(config, name)}-arn`;
+    }
+
     public static getArnFromParams(stack: Stack, key: string): string {
         return SsmUtils.getValue(stack, key);
     }
 
     public static getDefaultAlbName(config: Config, name: string = 'alb01'): string {
-        return `${Utils.getBaseName(config)}-${name}/alb`;
+        return `${this.getBaseAlbName(config, name)}/alb`;
+    }
+
+    public static getBaseAlbName(config: Config, name: string = 'alb01'): string {
+        return `${Utils.getBaseName(config)}-${name}`;
     }
 }
