@@ -2967,8 +2967,8 @@
         "affectsGlobalScope": false
       },
       "../../src/vpc-utils.ts": {
-        "version": "395a8de7e2b29ceec800f1e0bf05a30ca25849a7f9c2b33952a794f949d53c0a",
-        "signature": "a13e114230077d8340c014d45dd7dc4ea356c032d762508ad0ec551f248dc2c1",
+        "version": "accb47f88e3845e0d88ad537fe6f64df5f53a1f253e518ad33f2829970303f74",
+        "signature": "3d9546d6a1e929ccf96df67eaff63da7dfa116448d97b116ac807175a15a91b4",
         "affectsGlobalScope": false
       },
       "../../src/index.ts": {
