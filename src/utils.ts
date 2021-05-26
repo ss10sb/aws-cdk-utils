@@ -16,7 +16,7 @@ export class Utils {
         let config: T = await this.getConfig<T>(app, configDir);
         Tags.of(app).add('College', config.College);
         Tags.of(app).add('Environment', config.Environment);
-        const mainStackName = this.getBaseName(config);
+        const mainStackName = this.getMainStackName(config);
         return new stack(app, mainStackName, {
             env: {
                 account: config.AWSAccountId,
