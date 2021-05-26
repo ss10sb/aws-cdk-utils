@@ -16,12 +16,20 @@ export class Utils {
         let config: T = await this.getConfig<T>(app, configDir);
         Tags.of(app).add('College', config.College);
         Tags.of(app).add('Environment', config.Environment);
-        const mainStackName = `${config.College.toLowerCase()}-${config.Environment.toLowerCase()}-${config.Name}`;
+        const mainStackName = this.getBaseName(config);
         return new stack(app, mainStackName, {
             env: {
                 account: config.AWSAccountId,
                 region: config.AWSRegion
             }
         }, config);
+    }
+
+    public static getMainStackName(config: Config): string {
+        return `${this.getBaseName(config)}-${config.Name}`;
+    }
+
+    public static getBaseName(config: Config): string {
+        return `${config.College.toLowerCase()}-${config.Environment.toLowerCase()}`;
     }
 }

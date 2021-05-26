@@ -1,6 +1,7 @@
 import {IVpc, Vpc} from "@aws-cdk/aws-ec2";
 import {Stack} from "@aws-cdk/core";
 import {Config} from "./config";
+import {Utils} from "./utils";
 
 export class VpcUtils {
 
@@ -12,6 +13,6 @@ export class VpcUtils {
     }
 
     public static getDefaultVpcName(config: Config, name: string = 'vpc01'): string {
-        return `${config.College.toLowerCase()}-${config.Environment.toLowerCase()}-${name}/vpc`;
+        return `${Utils.getBaseName(config)}-${name}/vpc`;
     }
 }
