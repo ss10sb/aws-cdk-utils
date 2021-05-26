@@ -3,6 +3,7 @@ export * from './config';
 export * from './config-loader';
 export * from './config-parameters';
 export * from './config-stack';
+export * from './deep-writable';
 export * from './newable';
 export * from './ssm-utils';
 export * from './utils';

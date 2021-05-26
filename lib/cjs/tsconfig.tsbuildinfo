@@ -2966,14 +2966,19 @@
         "signature": "e31141feedc73c6a007cee35840399ee9ee7f60293e334cc7f05dba428c030e5",
         "affectsGlobalScope": false
       },
+      "../../src/deep-writable.ts": {
+        "version": "1943cdae7fbff2728a8befadf8e4832c11e454ddc23f046fdf62fadcb135a73a",
+        "signature": "42f2d5bc041bd6ced0c9464f2e3013bb1753d250215e998919ea80e4abf5d74c",
+        "affectsGlobalScope": false
+      },
       "../../src/vpc-utils.ts": {
         "version": "213326cfac60cd1721bd598d6abb191bc7b7e82941de7a36a55bf0f85c1578fa",
         "signature": "354ac143895fb56a98ef530828e56dc011c2517b75cc20cad21da2a7ed8fafb5",
         "affectsGlobalScope": false
       },
       "../../src/index.ts": {
-        "version": "5f9df66f1b4a6b0757a0f59b755fab2e1d187a2ab610ba3bbfb2208063c13675",
-        "signature": "876f90ccb645357ece801d1d7979959c39d1cd9694f2bad2038db55c00c77ce9",
+        "version": "57e6cf41358abc2f83913d38462496aedeaa32956cf9a71a82384be4e6c36d6d",
+        "signature": "cd2bb089196b035e5ddeed6cf8bb93d7ccf3966948187b6ba04306dad4aa8629",
         "affectsGlobalScope": false
       },
       "../../node_modules/@babel/types/lib/index.d.ts": {
@@ -6536,6 +6541,9 @@
         "../../node_modules/tslib/tslib.d.ts",
         "../../src/config-parameters.ts"
       ],
+      "../../src/deep-writable.ts": [
+        "../../node_modules/tslib/tslib.d.ts"
+      ],
       "../../src/index.ts": [
         "../../node_modules/tslib/tslib.d.ts",
         "../../src/alb-utils.ts",
@@ -6543,6 +6551,7 @@
         "../../src/config-parameters.ts",
         "../../src/config-stack.ts",
         "../../src/config.ts",
+        "../../src/deep-writable.ts",
         "../../src/newable.ts",
         "../../src/ssm-utils.ts",
         "../../src/utils.ts",
@@ -9982,6 +9991,7 @@
         "../../src/config-parameters.ts",
         "../../src/config-stack.ts",
         "../../src/config.ts",
+        "../../src/deep-writable.ts",
         "../../src/newable.ts",
         "../../src/ssm-utils.ts",
         "../../src/utils.ts",
@@ -10619,6 +10629,7 @@
       "../../src/config-parameters.ts",
       "../../src/config-stack.ts",
       "../../src/config.ts",
+      "../../src/deep-writable.ts",
       "../../src/index.ts",
       "../../src/newable.ts",
       "../../src/ssm-utils.ts",
