@@ -2972,8 +2972,8 @@
         "affectsGlobalScope": false
       },
       "../../src/index.ts": {
-        "version": "ea87edc4a6379652b6e662e32365525498d3da3ebf9957357ad75bba90a749e9",
-        "signature": "d4017f0ea16b11851c7ee09ffb0cd8c3d2c8fb05889eea8b72d11352f3d371b3",
+        "version": "876f90ccb645357ece801d1d7979959c39d1cd9694f2bad2038db55c00c77ce9",
+        "signature": "876f90ccb645357ece801d1d7979959c39d1cd9694f2bad2038db55c00c77ce9",
         "affectsGlobalScope": false
       },
       "../../node_modules/@babel/types/lib/index.d.ts": {
@@ -6538,11 +6538,13 @@
       ],
       "../../src/index.ts": [
         "../../node_modules/tslib/tslib.d.ts",
+        "../../src/alb-utils.ts",
         "../../src/config-loader.ts",
         "../../src/config-parameters.ts",
         "../../src/config-stack.ts",
         "../../src/config.ts",
         "../../src/newable.ts",
+        "../../src/ssm-utils.ts",
         "../../src/utils.ts",
         "../../src/vpc-utils.ts"
       ],
@@ -9975,11 +9977,13 @@
         "../../src/config-parameters.ts"
       ],
       "../../src/index.ts": [
+        "../../src/alb-utils.ts",
         "../../src/config-loader.ts",
         "../../src/config-parameters.ts",
         "../../src/config-stack.ts",
         "../../src/config.ts",
         "../../src/newable.ts",
+        "../../src/ssm-utils.ts",
         "../../src/utils.ts",
         "../../src/vpc-utils.ts"
       ],
