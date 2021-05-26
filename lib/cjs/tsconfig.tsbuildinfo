@@ -1367,8 +1367,8 @@
         "affectsGlobalScope": false
       },
       "../../src/config-parameters.ts": {
-        "version": "9a27db2a28cd4cec9236522edbf2910bb5a27a21c3945992b6c3a90ecea24433",
-        "signature": "9a27db2a28cd4cec9236522edbf2910bb5a27a21c3945992b6c3a90ecea24433",
+        "version": "55b08d92c9027aea7ffb1c6a3e68423190acd27ffce1441dce4fba45fe5401cd",
+        "signature": "55b08d92c9027aea7ffb1c6a3e68423190acd27ffce1441dce4fba45fe5401cd",
         "affectsGlobalScope": false
       },
       "../../src/config.ts": {
@@ -2967,8 +2967,8 @@
         "affectsGlobalScope": false
       },
       "../../src/vpc-utils.ts": {
-        "version": "accb47f88e3845e0d88ad537fe6f64df5f53a1f253e518ad33f2829970303f74",
-        "signature": "3d9546d6a1e929ccf96df67eaff63da7dfa116448d97b116ac807175a15a91b4",
+        "version": "213326cfac60cd1721bd598d6abb191bc7b7e82941de7a36a55bf0f85c1578fa",
+        "signature": "354ac143895fb56a98ef530828e56dc011c2517b75cc20cad21da2a7ed8fafb5",
         "affectsGlobalScope": false
       },
       "../../src/index.ts": {

@@ -5,6 +5,13 @@ import {Utils} from "./utils";
 
 export class VpcUtils {
 
+    public static getVpcFromConfig(stack: Stack, config: Config, prefix: string = 'stack'): IVpc {
+        if (config.Parameters.vpcId) {
+            return this.getVpcById(stack, config.Parameters.vpcId, prefix);
+        }
+        return this.getVpcByName(stack, this.getDefaultVpcName(config));
+    }
+
     public static getVpcByName(stack: Stack, vpcName: string, prefix: string = 'stack'): IVpc {
         return this.getVpcByOptions(stack, {
             isDefault: false,
