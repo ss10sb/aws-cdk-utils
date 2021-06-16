@@ -1,7 +1,6 @@
 import * as fs from 'fs';
 import * as path from "path";
 import {merge} from 'lodash';
-import {SSMClient, GetParameterResult, GetParameterCommand} from "@aws-sdk/client-ssm";
 import {Config} from "./config";
 
 export class ConfigLoader<T extends Config> {
@@ -9,21 +8,6 @@ export class ConfigLoader<T extends Config> {
 
     constructor(configDir: string) {
         this.configDir = configDir;
-    }
-
-    private async getSsmConfig(awsRegion: string, ssmParamName?: string): Promise<object> {
-        if (ssmParamName) {
-            try {
-                const client = new SSMClient({region: awsRegion});
-                const command = new GetParameterCommand({Name: ssmParamName, WithDecryption: true});
-                const response: GetParameterResult = await client.send(command);
-                return JSON.parse(response.Parameter?.Value ?? '{}');
-            } catch (error) {
-                console.log(error);
-                return {};
-            }
-        }
-        return {};
     }
 
     private async getConfigFromFiles(env: string): Promise<T> {
@@ -42,12 +26,20 @@ export class ConfigLoader<T extends Config> {
         if (fs.existsSync(jsonFile)) {
             return JSON.parse(fs.readFileSync(jsonFile, 'utf8'));
         }
-        throw Error(`Environment '${base}' not found.`);
+        console.log(`Environment '${base}' not found.`);
+        return {};
     }
 
     public async load(env: string): Promise<T> {
-        const mergedEnv = await this.getConfigFromFiles(env);
-        const ssmEnv = await this.getSsmConfig(mergedEnv.AWSRegion, mergedEnv.SsmParameterStore);
-        return <T>merge(mergedEnv, ssmEnv);
+        return await this.getConfigFromFiles(env);
+    }
+
+    public static convertStringToConfig<T extends Config>(value: string): T {
+        try {
+            return <T>JSON.parse(value);
+        } catch (e) {
+            console.log("Error parsing JSON", value);
+        }
+        return <T>{};
     }
 }

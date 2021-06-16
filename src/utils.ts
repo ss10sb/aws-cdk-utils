@@ -19,8 +19,8 @@ export class Utils {
         const mainStackName = this.getMainStackName(config);
         return new stack(app, mainStackName, {
             env: {
-                account: config.AWSAccountId,
-                region: config.AWSRegion
+                account: config?.AWSAccountId ?? process.env.CDK_DEFAULT_ACCOUNT,
+                region: config?.AWSRegion ?? process.env.CDK_DEFAULT_REGION
             }
         }, config);
     }

@@ -1,10 +1,7 @@
 import {Config, ConfigLoader, ConfigParameters} from "../src";
 import * as path from 'path';
-import {mockClient} from "aws-sdk-client-mock";
-import {GetParameterCommand, SSMClient} from "@aws-sdk/client-ssm";
 
 const configDir = path.resolve(__dirname, 'config');
-const ssmMock = mockClient(SSMClient);
 const loader = new ConfigLoader(configDir);
 
 interface OtherConfig extends Config {
@@ -17,32 +14,12 @@ interface OtherParameters extends ConfigParameters {
 
 describe('config loader', () => {
 
-    it('should override config from SSM', async () => {
-        ssmMock.on(GetParameterCommand).resolves({
-            Parameter: {
-                Value: '{"AWSRegion": "us-east-1"}'
-            }
-        });
-        const defaultEnv = {
-            AWSAccountId: "100",
-            AWSRegion: 'us-east-1',
-            Name: 'Stack',
-            College: 'PCC',
-            Environment: 'sdlc',
-            Version: '0.0.0',
-            Build: '0',
-            SsmParameterStore: '<ssm-parameter-store>',
-            Parameters: {}
-        };
-        expect(loader.load('sdlc')).resolves.toEqual(defaultEnv);
-    });
-
-    it('should throw an error with non-existent env', () => {
-        expect(loader.load('none')).rejects.toThrow("Environment 'none' not found.");
+    it('should return empty object with non-existent env', () => {
+        const l = new ConfigLoader(path.join(__dirname));
+        expect(l.load('none')).resolves.toEqual({});
     });
 
     it('should use default config for sdlc', () => {
-        ssmMock.on(GetParameterCommand).resolves({});
         const defaultEnv = {
             AWSAccountId: "100",
             AWSRegion: 'us-west-2',
@@ -51,7 +28,6 @@ describe('config loader', () => {
             Environment: 'sdlc',
             Version: '0.0.0',
             Build: '0',
-            SsmParameterStore: '<ssm-parameter-store>',
             Parameters: {}
         };
 
@@ -59,7 +35,6 @@ describe('config loader', () => {
     });
 
     it('should override default config for prod', () => {
-        ssmMock.on(GetParameterCommand).resolves({});
         const defaultEnv = {
             AWSAccountId: "200",
             AWSRegion: 'us-west-2',
@@ -68,7 +43,6 @@ describe('config loader', () => {
             Environment: 'prod',
             Version: '0.0.0',
             Build: '0',
-            SsmParameterStore: '<ssm-parameter-store>',
             Parameters: {}
         };
 
@@ -76,7 +50,6 @@ describe('config loader', () => {
     });
 
     it('should override default config for shared', () => {
-        ssmMock.on(GetParameterCommand).resolves({});
         const defaultEnv = {
             AWSAccountId: "300",
             AWSRegion: 'us-west-2',
@@ -85,7 +58,6 @@ describe('config loader', () => {
             Environment: 'shared',
             Version: '0.0.0',
             Build: '0',
-            SsmParameterStore: '<ssm-parameter-store>',
             Parameters: {}
         };
 
@@ -93,7 +65,6 @@ describe('config loader', () => {
     });
 
     it('should use different config object', () => {
-        ssmMock.on(GetParameterCommand).resolves({});
         const defaultEnv = {
             AWSAccountId: "100",
             AWSRegion: 'us-west-2',
@@ -102,7 +73,6 @@ describe('config loader', () => {
             Environment: 'sdlc',
             Version: '0.0.0',
             Build: '0',
-            SsmParameterStore: '<ssm-parameter-store>',
             Parameters: {
                 otherParam: 'foo'
             }
@@ -112,7 +82,6 @@ describe('config loader', () => {
     });
 
     it('should use js file when available', () => {
-        ssmMock.on(GetParameterCommand).resolves({});
         const defaultEnv = {
             AWSAccountId: "100",
             AWSRegion: 'us-west-2',
@@ -121,7 +90,6 @@ describe('config loader', () => {
             Environment: 'sdlc',
             Version: '0.0.0',
             Build: '0',
-            SsmParameterStore: '<ssm-parameter-store>',
             Parameters: {
                 jsOnlyParam: 'foo'
             }
@@ -131,7 +99,6 @@ describe('config loader', () => {
     });
 
     it('should use function from js file', () => {
-        ssmMock.on(GetParameterCommand).resolves({});
         const defaultEnv = {
             AWSAccountId: "100",
             AWSRegion: 'us-west-2',
@@ -140,7 +107,6 @@ describe('config loader', () => {
             Environment: 'sdlc',
             Version: '0.0.0',
             Build: '0',
-            SsmParameterStore: '<ssm-parameter-store>',
             Parameters: {
                 testFuncParam: 'foobar'
             }
@@ -150,7 +116,6 @@ describe('config loader', () => {
     });
 
     it('should use aws from js file', () => {
-        ssmMock.on(GetParameterCommand).resolves({});
         const defaultEnv = {
             AWSAccountId: "100",
             AWSRegion: 'us-west-2',
@@ -159,7 +124,6 @@ describe('config loader', () => {
             Environment: 'sdlc',
             Version: '0.0.0',
             Build: '0',
-            SsmParameterStore: '<ssm-parameter-store>',
             Parameters: {
                 awsParam: 'Private'
             }

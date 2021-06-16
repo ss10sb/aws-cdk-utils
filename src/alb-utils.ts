@@ -1,4 +1,4 @@
-import {Stack} from "@aws-cdk/core";
+import {Construct} from "@aws-cdk/core";
 import {ApplicationLoadBalancer, IApplicationLoadBalancer} from "@aws-cdk/aws-elasticloadbalancingv2";
 import {Config} from "./config";
 import {Utils} from "./utils";
@@ -6,8 +6,8 @@ import {SsmUtils} from "./ssm-utils";
 
 export class AlbUtils {
 
-    public static getAlbByArn(stack: Stack, arn: string, prefix: string = 'stack'): IApplicationLoadBalancer {
-        return ApplicationLoadBalancer.fromLookup(stack, `${prefix}-alb`, {
+    public static getAlbByArn(scope: Construct, arn: string, prefix: string = 'stack'): IApplicationLoadBalancer {
+        return ApplicationLoadBalancer.fromLookup(scope, `${prefix}-alb`, {
             loadBalancerArn: arn
         });
     }
@@ -16,8 +16,8 @@ export class AlbUtils {
         return `${AlbUtils.getBaseAlbName(config, name)}-arn`;
     }
 
-    public static getArnFromParams(stack: Stack, key: string): string {
-        return SsmUtils.getValue(stack, key);
+    public static getArnFromParams(scope: Construct, key: string): string {
+        return SsmUtils.getStringValue(scope, key);
     }
 
     public static getDefaultAlbName(config: Config, name: string = 'alb01'): string {
