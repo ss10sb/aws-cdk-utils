@@ -1,4 +1,4 @@
-import {Construct} from "@aws-cdk/core";
+import {Construct, Stack} from "@aws-cdk/core";
 import {Config} from "./config";
 import {SsmUtils} from "./ssm-utils";
 import {IStringParameter, StringParameter} from "@aws-cdk/aws-ssm";
@@ -37,7 +37,11 @@ export class ConfigParamStore extends Construct {
         return SsmUtils.getSecretParam(this, this.getParamName(name));
     }
 
-    private getParamName(name: string): string {
+    getParamName(name: string): string {
         return `/${this.node.id}/${name}`;
+    }
+
+    getArn(name: string): string {
+        return `arn:aws:ssm:${Stack.of(this).region}:${Stack.of(this).account}:parameter${this.getParamName(name)}`;
     }
 }

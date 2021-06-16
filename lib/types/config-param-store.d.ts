@@ -9,5 +9,6 @@ export declare class ConfigParamStore extends Construct {
     fetchStringParameterAsString(name: string): string;
     fetchStringAsPlaceholder(name: string): IStringParameter;
     fetchSecretAsPlaceholder(name: string): IStringParameter;
-    private getParamName;
+    getParamName(name: string): string;
+    getArn(name: string): string;
 }

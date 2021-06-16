@@ -29,4 +29,16 @@ describe('config param store', () => {
         const param = configParamStore.fetchStringAsPlaceholder('test');
         expect(SynthUtils.toCloudFormation(stack)).toMatchSnapshot();
     });
+    it('can create arn', () => {
+        const app = new App();
+        const buildConfig = <Config>{
+            College: 'PCC',
+            Environment: 'sdlc',
+            Name: 'test'
+        }
+        const stack = new ConfigStack(app, 'test', {}, buildConfig);
+        const configParamStore = new ConfigParamStore(stack, stack.mixNameWithId('param'));
+        const arn = configParamStore.getArn('defaults');
+        expect(arn).toContain(':parameter/test-param/defaults');
+    });
 });
