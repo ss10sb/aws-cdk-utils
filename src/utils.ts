@@ -7,7 +7,7 @@ import {Newable} from "./newable";
 export class Utils {
 
     public static async getConfig<T extends Config>(app: App, configDir: string): Promise<T> {
-        const env = app.node.tryGetContext('env') ?? 'sdlc';
+        const env = app.node.tryGetContext('env');
         const loader = new ConfigLoader<T>(configDir);
         return await loader.load(env);
     }

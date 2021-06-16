@@ -10,9 +10,12 @@ export class ConfigLoader<T extends Config> {
         this.configDir = configDir;
     }
 
-    private async getConfigFromFiles(env: string): Promise<T> {
+    private async getConfigFromFiles(env: string | null): Promise<T> {
         const defaultEnv = await this.getFromBase('defaults');
-        const overrideEnv = await this.getFromBase(env);
+        let overrideEnv = {};
+        if (env) {
+            overrideEnv = await this.getFromBase(env);
+        }
         return <T>merge(defaultEnv, overrideEnv);
     }
 
