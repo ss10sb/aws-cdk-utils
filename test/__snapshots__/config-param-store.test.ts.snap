@@ -3,7 +3,7 @@
 exports[`config param store can fetch string param as placeholder 1`] = `
 Object {
   "Parameters": Object {
-    "cpscpstestlookupParameterF52030E8": Object {
+    "cpstestlookupParameter": Object {
       "Default": "/cps/test",
       "Type": "AWS::SSM::Parameter::Value<String>",
     },
@@ -14,7 +14,7 @@ Object {
 exports[`config param store can store params 1`] = `
 Object {
   "Resources": Object {
-    "cpscpscpstestparamE2463A29": Object {
+    "testcpstestparam85CAD9FA": Object {
       "Properties": Object {
         "Name": "/cps/test",
         "Type": "String",

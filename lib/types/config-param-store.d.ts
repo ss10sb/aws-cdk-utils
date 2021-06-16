@@ -1,8 +1,10 @@
 import { Construct } from "@aws-cdk/core";
 import { Config } from "./config";
 import { IStringParameter, StringParameter } from "@aws-cdk/aws-ssm";
-export declare class ConfigParamStore extends Construct {
+export declare class ConfigParamStore {
     storeKeys: String[];
+    readonly scope: Construct;
+    readonly id: string;
     constructor(scope: Construct, id: string);
     store<T extends Config>(name: string, config: T): StringParameter;
     fetchStringAsValue<T extends Config>(name: string): T;
