@@ -44,7 +44,7 @@ export class ConfigStack<T extends Config> extends cdk.Stack {
 
     protected retrieveConfigValueFromParamStore(): T | null {
         try {
-            const configParamStore: ConfigParamStore = new ConfigParamStore(this, this.mixNameWithId('retrieve-param'));
+            const configParamStore: ConfigParamStore = new ConfigParamStore(this, this.mixNameWithId('param'));
             return configParamStore.fetchStringAsValue<T>('config');
         } catch (e) {
             console.log('Unable to retrieve parameter', e);
@@ -53,7 +53,7 @@ export class ConfigStack<T extends Config> extends cdk.Stack {
     }
 
     protected storeConfigToParamStore(config: T): IStringParameter | null {
-        const configParamStore: ConfigParamStore = new ConfigParamStore(this, this.mixNameWithId('store-param'));
+        const configParamStore: ConfigParamStore = new ConfigParamStore(this, this.mixNameWithId('param'));
         return configParamStore.store<T>('config', config);
     }
 

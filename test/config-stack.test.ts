@@ -59,7 +59,7 @@ describe('config stack', () => {
         }
         const stack = new ConfigStack(app, 'test', {}, buildConfig);
         expect(stack).toHaveResource('AWS::SSM::Parameter', {
-            Name: '/test-store-param/config',
+            Name: '/test-param/config',
             Type: 'String',
             Value: '{"Name":"test","StoreConfig":true,"Parameters":{"vpcId":"abc123"}}',
         });
@@ -76,7 +76,7 @@ describe('config stack', () => {
         }
         const stack = new ConfigStack(app, 'test', {}, buildConfig);
         expect(stack).not.toHaveResource('AWS::SSM::Parameter', {
-            Name: '/test-store-param/config',
+            Name: '/test-param/config',
             Type: 'String',
             Value: '{"Name":"test","StoreConfig":true,"Parameters":{"vpcId":"abc123"}}',
         });
