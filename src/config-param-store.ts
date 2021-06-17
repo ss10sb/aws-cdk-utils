@@ -25,7 +25,7 @@ export class ConfigParamStore {
     }
 
     fetchStringAsValue<T extends Config>(name: string): T {
-        return ConfigLoader.convertStringToConfig<T>(this.fetchStringParameterAsString(this.getParamName(name)));
+        return ConfigLoader.convertStringToConfig<T>(this.fetchStringParameterAsString(name));
     }
 
     fetchStringParameterAsString(name: string): string {

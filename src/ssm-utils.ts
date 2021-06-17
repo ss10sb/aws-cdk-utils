@@ -1,4 +1,4 @@
-import {Construct, Stack} from "@aws-cdk/core";
+import {Construct} from "@aws-cdk/core";
 import {IStringParameter, ParameterType, StringParameter} from "@aws-cdk/aws-ssm";
 
 export class SsmUtils {
