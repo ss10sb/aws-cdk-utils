@@ -1,6 +1,6 @@
 {
   "name": "@smorken/cdk-utils",
-  "version": "1.108.1-g",
+  "version": "1.108.1-h",
   "license": "MIT",
   "author": "Scott Morken <scott.morken@phoenixcollege.edu>",
   "repository": {
@@ -18,7 +18,7 @@
     "lib/**/*"
   ],
   "devDependencies": {
-    "@aws-cdk/assert": "^1.108.1",
+    "@aws-cdk/assert": "1.108.1",
     "@aws-cdk/aws-ec2": "1.108.1",
     "@types/jest": "^26.0.10",
     "@types/lodash": "^4.14.169",

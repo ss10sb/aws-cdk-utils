@@ -1,6 +1,7 @@
 export * from './alb-utils';
 export * from './config';
 export * from './config-loader';
+export * from './config-mutable';
 export * from './config-param-store';
 export * from './config-parameters';
 export * from './config-stack';

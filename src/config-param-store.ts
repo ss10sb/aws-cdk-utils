@@ -6,7 +6,7 @@ import {ConfigLoader} from "./config-loader";
 
 export class ConfigParamStore {
 
-    public storeKeys: String[] = ['Name', 'College', 'Environment', 'Parameters'];
+    public storeKeys: String[] = ['Name', 'College', 'Environment', 'StoreConfig', 'Parameters'];
     public readonly scope: Construct;
     public readonly id: string;
 

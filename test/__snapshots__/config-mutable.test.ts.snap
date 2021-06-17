@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`config mutable can store params 1`] = `
+Object {
+  "Resources": Object {
+    "testtestconfigconfigparamC2B5AB99": Object {
+      "Properties": Object {
+        "Name": "/test-config/config",
+        "Type": "String",
+        "Value": "{\\"Name\\":\\"test\\",\\"StoreConfig\\":true}",
+      },
+      "Type": "AWS::SSM::Parameter",
+    },
+    "testtestconfigparam203D2284": Object {
+      "Properties": Object {
+        "Name": "/test/config",
+        "Type": "String",
+        "Value": "{\\"Name\\":\\"test\\",\\"StoreConfig\\":true}",
+      },
+      "Type": "AWS::SSM::Parameter",
+    },
+  },
+}
+`;
