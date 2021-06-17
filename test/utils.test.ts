@@ -31,6 +31,13 @@ describe('utils', () => {
         expect(Utils.getMainStackName(config)).toEqual('pcc-prod-test');
     });
 
+    it('should create stack name from config and suffix', async () => {
+        const app = new cdk.App();
+        const stack = await Utils.run(app, configDir, ConfigStack, 'suffix');
+        expect(stack.node.id).toEqual('pcc-sdlc-Stack-suffix');
+        expect(stack.internalId).toEqual('pcc-sdlc-Stack');
+    });
+
     it('should load config stack', () => {
         const app = new cdk.App();
         expect(Utils.run(app, configDir, ConfigStack)).resolves.toBeInstanceOf(ConfigStack);

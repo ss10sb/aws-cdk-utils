@@ -12,7 +12,7 @@ export class Utils {
         return await loader.load(env);
     }
 
-    public static async run<T extends Config>(app: App, configDir: string, stack: Newable<ConfigStack<T>>): Promise<ConfigStack<T>> {
+    public static async run<T extends Config>(app: App, configDir: string, stack: Newable<ConfigStack<T>>, idSuffix: string = ''): Promise<ConfigStack<T>> {
         let config: T = await this.getConfig<T>(app, configDir);
         Tags.of(app).add('College', config.College);
         Tags.of(app).add('Environment', config.Environment);
@@ -22,7 +22,7 @@ export class Utils {
                 account: config?.AWSAccountId ?? process.env.CDK_DEFAULT_ACCOUNT,
                 region: config?.AWSRegion ?? process.env.CDK_DEFAULT_REGION
             }
-        }, config);
+        }, config, idSuffix);
     }
 
     public static getMainStackName(config: Config): string {
