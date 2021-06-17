@@ -25,11 +25,11 @@ export class ConfigParamStore {
     }
 
     fetchStringAsValue<T extends Config>(name: string): T {
-        return ConfigLoader.convertStringToConfig<T>(this.fetchStringParameterAsString(name));
+        return ConfigLoader.convertStringToConfig<T>(this.fetchStringParameterAsString(this.getParamName(name)));
     }
 
     fetchStringParameterAsString(name: string): string {
-        return SsmUtils.getStringValue(this.scope, name);
+        return SsmUtils.getStringValue(this.scope, this.getParamName(name));
     }
 
     fetchStringAsPlaceholder(name: string): IStringParameter {
