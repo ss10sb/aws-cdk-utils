@@ -6,7 +6,7 @@ export class ConfigStack<T extends Config> extends cdk.Stack {
 
     public config: T;
     public readonly internalId: string;
-    private configMutable: ConfigMutable<T> | undefined;
+    protected configMutable: ConfigMutable<T> | undefined;
 
     constructor(app: cdk.App, id: string, stackProps: cdk.StackProps, config: T, suffix: string = '') {
         const internalId = id;
