@@ -8,12 +8,12 @@ export class ConfigStack<T extends Config> extends cdk.Stack {
     public readonly internalId: string;
     protected configMutable: ConfigMutable<T> | undefined;
 
-    constructor(app: cdk.App, id: string, stackProps: cdk.StackProps, config: T, suffix: string = '') {
+    constructor(scope: cdk.Construct, id: string, stackProps: cdk.StackProps, config: T, suffix: string = '') {
         const internalId = id;
         if (suffix) {
             id = `${id}-${suffix.toLowerCase()}`;
         }
-        super(app, id, stackProps);
+        super(scope, id, stackProps);
         this.internalId = internalId;
         this.config = this.mutateConfig(config);
         this.preInit();

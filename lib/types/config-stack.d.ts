@@ -5,7 +5,7 @@ export declare class ConfigStack<T extends Config> extends cdk.Stack {
     config: T;
     readonly internalId: string;
     protected configMutable: ConfigMutable<T> | undefined;
-    constructor(app: cdk.App, id: string, stackProps: cdk.StackProps, config: T, suffix?: string);
+    constructor(scope: cdk.Construct, id: string, stackProps: cdk.StackProps, config: T, suffix?: string);
     get isProd(): boolean;
     mixNameWithId(name: string): string;
     preInit(): void;
