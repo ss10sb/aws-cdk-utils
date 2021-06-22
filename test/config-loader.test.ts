@@ -12,6 +12,14 @@ interface OtherParameters extends ConfigParameters {
     readonly otherParam: string;
 }
 
+interface SecretConfig extends Config {
+    readonly Parameters: SecretParameters;
+}
+
+interface SecretParameters extends ConfigParameters {
+    readonly secrets: { [key: string]: string };
+}
+
 describe('config loader', () => {
 
     it('should return empty object with non-existent env', () => {
@@ -130,6 +138,38 @@ describe('config loader', () => {
         };
         const typedLoader = new ConfigLoader<OtherConfig>(configDir);
         expect(typedLoader.load('aws')).resolves.toEqual(defaultEnv);
+    });
+
+    it('should use base instead of defaults when set', () => {
+        const defaultEnv = {
+            Name: 'secrets',
+            College: 'PCC',
+            Environment: 'sdlc',
+            Version: '0.0.0',
+            Parameters: {
+                secrets: {
+                    FOO: 'sdlc'
+                }
+            }
+        };
+        const typedLoader = new ConfigLoader<SecretConfig>(configDir, 'secrets');
+        expect(typedLoader.load('sdlc')).resolves.toEqual(defaultEnv);
+    });
+
+    it('should use base and mixin overrides instead of defaults when set', () => {
+        const defaultEnv = {
+            Name: 'secrets',
+            College: 'PCC',
+            Environment: 'prod',
+            Version: '0.0.0',
+            Parameters: {
+                secrets: {
+                    FOO: 'prod'
+                }
+            }
+        };
+        const typedLoader = new ConfigLoader<SecretConfig>(configDir, 'secrets');
+        expect(typedLoader.load('prod')).resolves.toEqual(defaultEnv);
     });
 });
 

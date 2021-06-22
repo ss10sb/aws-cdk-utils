@@ -5,16 +5,20 @@ import {Config} from "./config";
 
 export class ConfigLoader<T extends Config> {
     readonly configDir: string;
+    readonly base: string = 'defaults';
 
-    constructor(configDir: string) {
+    constructor(configDir: string, base?: string) {
         this.configDir = configDir;
+        if (base) {
+            this.base = base;
+        }
     }
 
-    private async getConfigFromFiles(env: string | null): Promise<T> {
-        const defaultEnv = await this.getFromBase('defaults');
+    private async getConfigFromFiles(env?: string): Promise<T> {
+        const defaultEnv = await this.getFromBase(this.base);
         let overrideEnv = {};
         if (env) {
-            overrideEnv = await this.getFromBase(env);
+            overrideEnv = await this.getFromBase(this.getEnvBase(env));
         }
         return <T>merge(defaultEnv, overrideEnv);
     }
@@ -31,6 +35,13 @@ export class ConfigLoader<T extends Config> {
         }
         console.log(`Environment '${base}' not found.`);
         return {};
+    }
+
+    private getEnvBase(env: string): string {
+        if (this.base === 'defaults') {
+            return env;
+        }
+        return `${this.base}.${env}`;
     }
 
     public async load(env: string): Promise<T> {
