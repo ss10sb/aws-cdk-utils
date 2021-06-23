@@ -1,5 +1,5 @@
 import cdk = require('@aws-cdk/core');
-import {Config, ConfigStack, Utils} from "../src";
+import {Config, ConfigEnvironments, ConfigStack, Utils} from "../src";
 import * as path from 'path';
 
 const configDir = path.resolve(__dirname, 'config');
@@ -33,7 +33,7 @@ describe('utils', () => {
 
     it('should create stack name from config and suffix', async () => {
         const app = new cdk.App();
-        const stack = await Utils.run(app, configDir, ConfigStack, 'suffix');
+        const stack = await Utils.run(app, configDir, ConfigStack, {idSuffix: 'suffix'});
         expect(stack.node.id).toEqual('pcc-sdlc-Stack-suffix');
         expect(stack.internalId).toEqual('pcc-sdlc-Stack');
     });
@@ -46,5 +46,41 @@ describe('utils', () => {
     it('should load extended config stack', () => {
         const app = new cdk.App();
         expect(Utils.run<ExtendedConfig>(app, configDir, ExtendedStack)).resolves.toBeInstanceOf(ExtendedStack);
+    });
+
+    it('should accept configBase', async () => {
+        const expected = {
+            Name: 'secrets',
+            College: 'PCC',
+            Environment: ConfigEnvironments.SDLC,
+            Version: "0.0.0",
+            Parameters: {
+                secrets: {
+                    FOO: 'sdlc'
+                }
+            }
+        };
+        const app = new cdk.App();
+        const stack = await Utils.run(app, configDir, ConfigStack, {configBase: 'secrets'});
+        expect(stack.node.id).toEqual('pcc-sdlc-secrets');
+        expect(stack.config).toEqual(expected);
+    });
+
+    it('should accept configBase and configEnv', async () => {
+        const expected = {
+            Name: 'secrets',
+            College: 'PCC',
+            Environment: ConfigEnvironments.PROD,
+            Version: "0.0.0",
+            Parameters: {
+                secrets: {
+                    FOO: 'prod'
+                }
+            }
+        };
+        const app = new cdk.App();
+        const stack = await Utils.run(app, configDir, ConfigStack, {configBase: 'secrets', configEnv: 'prod'});
+        expect(stack.node.id).toEqual('pcc-prod-secrets');
+        expect(stack.config).toEqual(expected);
     });
 });

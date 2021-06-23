@@ -6,6 +6,6 @@ export declare class ConfigLoader<T extends Config> {
     private getConfigFromFiles;
     private getFromBase;
     private getEnvBase;
-    load(env: string): Promise<T>;
+    load(env?: string): Promise<T>;
     static convertStringToConfig<T extends Config>(value: string): T;
 }

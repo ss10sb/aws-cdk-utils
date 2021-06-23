@@ -44,7 +44,7 @@ export class ConfigLoader<T extends Config> {
         return `${this.base}.${env}`;
     }
 
-    public async load(env: string): Promise<T> {
+    public async load(env?: string): Promise<T> {
         return await this.getConfigFromFiles(env);
     }
 
