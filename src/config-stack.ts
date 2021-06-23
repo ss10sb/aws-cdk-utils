@@ -2,16 +2,20 @@ import * as cdk from '@aws-cdk/core';
 import {Config} from './config';
 import {ConfigMutable} from "./config-mutable";
 
+export interface ConfigStackProps {
+    suffix?: string;
+}
+
 export class ConfigStack<T extends Config> extends cdk.Stack {
 
     public config: T;
     public readonly internalId: string;
     protected configMutable: ConfigMutable<T> | undefined;
 
-    constructor(scope: cdk.Construct, id: string, stackProps: cdk.StackProps, config: T, suffix: string = '') {
+    constructor(scope: cdk.Construct, id: string, stackProps: cdk.StackProps, config: T, configStackProps: ConfigStackProps = {}) {
         const internalId = id;
-        if (suffix) {
-            id = `${id}-${suffix.toLowerCase()}`;
+        if (configStackProps.suffix) {
+            id = `${id}-${configStackProps.suffix}`;
         }
         super(scope, id, stackProps);
         this.internalId = internalId;

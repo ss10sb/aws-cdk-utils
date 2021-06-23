@@ -117,4 +117,11 @@ describe('utils', () => {
         expect(stack.node.id).toEqual('pcc-prod-secrets');
         expect(stack.config).toEqual(expected);
     });
+
+    it('should pass idSuffix to stack', async () => {
+        const app = new cdk.App();
+        const stack = await Utils.run(app, configDir, ConfigStack, {idSuffix: 'bar'});
+        expect(stack.node.id).toEqual('pcc-sdlc-Stack-bar');
+        expect(stack.internalId).toEqual('pcc-sdlc-Stack');
+    });
 });

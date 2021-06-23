@@ -81,4 +81,14 @@ describe('config stack', () => {
             Value: '{"Name":"test","StoreConfig":true,"Parameters":{"vpcId":"abc123"}}',
         });
     });
+    it('should use suffix to create id', () => {
+        const app = new cdk.App();
+        const buildConfig = <Config>{
+            Name: 'test',
+            Parameters: {}
+        }
+        const stack = new ConfigStack(app, 'test', {}, buildConfig, {suffix: 'bar'});
+        expect(stack.node.id).toBe('test-bar');
+        expect(stack.internalId).toBe('test');
+    });
 });

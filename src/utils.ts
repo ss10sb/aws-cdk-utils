@@ -1,7 +1,7 @@
 import {Config} from "./config";
 import {App, Tags} from "@aws-cdk/core";
 import {ConfigLoader} from "./config-loader";
-import {ConfigStack} from "./config-stack";
+import {ConfigStack, ConfigStackProps} from "./config-stack";
 import {Newable} from "./newable";
 
 export interface UtilsRunProps {
@@ -32,7 +32,16 @@ export class Utils {
                 account: config?.AWSAccountId ?? process.env.CDK_DEFAULT_ACCOUNT,
                 region: config?.AWSRegion ?? process.env.CDK_DEFAULT_REGION
             }
-        }, config, props?.idSuffix);
+        }, config, this.getConfigStackProps(props));
+    }
+
+    protected static getConfigStackProps(props?: UtilsRunProps): ConfigStackProps {
+        let csProps: ConfigStackProps = {};
+        if (props?.idSuffix) {
+            csProps.suffix = props.idSuffix
+        }
+        ;
+        return csProps;
     }
 
     public static getMainStackName(config: Config): string {
