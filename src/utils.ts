@@ -20,6 +20,10 @@ export class Utils {
     public static async run<T extends Config>(app: App, configDir: string, stack: Newable<ConfigStack<T>>, props?: UtilsRunProps): Promise<ConfigStack<T>> {
         const configEnv = props?.configEnv ?? app.node.tryGetContext('env');
         let config: T = await this.getConfig<T>(configDir, props?.configBase, configEnv);
+        return this.executeStack(app, stack, config, props);
+    }
+
+    public static executeStack<T extends Config>(app: App, stack: Newable<ConfigStack<T>>, config: T, props?: UtilsRunProps): ConfigStack<T> {
         Tags.of(app).add('College', config.College);
         Tags.of(app).add('Environment', config.Environment);
         const mainStackName = this.getMainStackName(config);

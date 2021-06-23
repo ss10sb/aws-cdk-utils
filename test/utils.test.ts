@@ -48,6 +48,40 @@ describe('utils', () => {
         expect(Utils.run<ExtendedConfig>(app, configDir, ExtendedStack)).resolves.toBeInstanceOf(ExtendedStack);
     });
 
+    it('should load default config', async () => {
+        const expected = {
+            AWSAccountId: "100",
+            AWSRegion: 'us-west-2',
+            Name: 'Stack',
+            College: 'PCC',
+            Environment: ConfigEnvironments.SDLC,
+            Version: "0.0.0",
+            Build: '0',
+            Parameters: {}
+        };
+        const app = new cdk.App();
+        const stack = await Utils.run(app, configDir, ConfigStack);
+        expect(stack.node.id).toEqual('pcc-sdlc-Stack');
+        expect(stack.config).toEqual(expected);
+    });
+
+    it('should override default config', async () => {
+        const expected = {
+            AWSAccountId: "200",
+            AWSRegion: 'us-west-2',
+            Name: 'Stack',
+            College: 'PCC',
+            Environment: ConfigEnvironments.PROD,
+            Version: "0.0.0",
+            Build: '0',
+            Parameters: {}
+        };
+        const app = new cdk.App();
+        const stack = await Utils.run(app, configDir, ConfigStack, {configEnv: 'prod'});
+        expect(stack.node.id).toEqual('pcc-prod-Stack');
+        expect(stack.config).toEqual(expected);
+    });
+
     it('should accept configBase', async () => {
         const expected = {
             Name: 'secrets',

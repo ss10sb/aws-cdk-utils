@@ -1,7 +1,7 @@
 import {Config, ConfigLoader, ConfigParameters} from "../src";
 import * as path from 'path';
 
-const configDir = path.resolve(__dirname, 'config');
+const configDir = path.join(__dirname, 'config');
 const loader = new ConfigLoader(configDir);
 
 interface OtherConfig extends Config {
