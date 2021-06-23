@@ -40,12 +40,12 @@ describe('utils', () => {
 
     it('should load config stack', () => {
         const app = new cdk.App();
-        expect(Utils.run(app, configDir, ConfigStack)).resolves.toBeInstanceOf(ConfigStack);
+        expect(Utils.run(app, configDir, ConfigStack)).toBeInstanceOf(ConfigStack);
     });
 
     it('should load extended config stack', () => {
         const app = new cdk.App();
-        expect(Utils.run<ExtendedConfig>(app, configDir, ExtendedStack)).resolves.toBeInstanceOf(ExtendedStack);
+        expect(Utils.run<ExtendedConfig>(app, configDir, ExtendedStack)).toBeInstanceOf(ExtendedStack);
     });
 
     it('should load default config', async () => {
@@ -82,7 +82,23 @@ describe('utils', () => {
         expect(stack.config).toEqual(expected);
     });
 
-    it('should accept configBase', async () => {
+    it('should accept configBase without env', async () => {
+        const expected = {
+            Name: 'secrets',
+            College: 'PCC',
+            Environment: 'none',
+            Version: "0.0.0",
+            Parameters: {
+                secrets: {}
+            }
+        };
+        const app = new cdk.App();
+        const stack = await Utils.run(app, configDir, ConfigStack, {configBase: 'secrets'});
+        expect(stack.node.id).toEqual('pcc-none-secrets');
+        expect(stack.config).toEqual(expected);
+    });
+
+    it('should accept configBase and configEnv sdlc', async () => {
         const expected = {
             Name: 'secrets',
             College: 'PCC',
@@ -95,12 +111,12 @@ describe('utils', () => {
             }
         };
         const app = new cdk.App();
-        const stack = await Utils.run(app, configDir, ConfigStack, {configBase: 'secrets'});
+        const stack = await Utils.run(app, configDir, ConfigStack, {configBase: 'secrets', configEnv: 'sdlc'});
         expect(stack.node.id).toEqual('pcc-sdlc-secrets');
         expect(stack.config).toEqual(expected);
     });
 
-    it('should accept configBase and configEnv', async () => {
+    it('should accept configBase and configEnv prod', async () => {
         const expected = {
             Name: 'secrets',
             College: 'PCC',
@@ -116,6 +132,38 @@ describe('utils', () => {
         const stack = await Utils.run(app, configDir, ConfigStack, {configBase: 'secrets', configEnv: 'prod'});
         expect(stack.node.id).toEqual('pcc-prod-secrets');
         expect(stack.config).toEqual(expected);
+    });
+
+    it('should accept configBase and multiple configEnvs', async () => {
+        const expectedProd = {
+            Name: 'secrets',
+            College: 'PCC',
+            Environment: ConfigEnvironments.PROD,
+            Version: "0.0.0",
+            Parameters: {
+                secrets: {
+                    FOO: 'prod'
+                }
+            }
+        };
+        const expectedSdlc = {
+            Name: 'secrets',
+            College: 'PCC',
+            Environment: ConfigEnvironments.SDLC,
+            Version: "0.0.0",
+            Parameters: {
+                secrets: {
+                    FOO: 'sdlc'
+                }
+            }
+        };
+        const app = new cdk.App();
+        const stack = await Utils.run(app, configDir, ConfigStack, {configBase: 'secrets', configEnv: 'prod'});
+        expect(stack.node.id).toEqual('pcc-prod-secrets');
+        expect(stack.config).toEqual(expectedProd);
+        const stack2 = await Utils.run(app, configDir, ConfigStack, {configBase: 'secrets', configEnv: 'sdlc'});
+        expect(stack2.node.id).toEqual('pcc-sdlc-secrets');
+        expect(stack2.config).toEqual(expectedSdlc);
     });
 
     it('should pass idSuffix to stack', async () => {

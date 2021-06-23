@@ -1,6 +1,6 @@
 {
   "name": "@smorken/cdk-utils",
-  "version": "1.108.1-p",
+  "version": "1.108.1-q",
   "license": "MIT",
   "author": "Scott Morken <scott.morken@phoenixcollege.edu>",
   "repository": {
@@ -36,7 +36,6 @@
     "@aws-cdk/aws-elasticloadbalancingv2": "1.108.1",
     "@aws-cdk/aws-ssm": "1.108.1",
     "@aws-cdk/core": "1.108.1",
-    "lodash": "^4.17.21",
     "source-map-support": "^0.5.16"
   }
 }

@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import * as path from "path";
-import {merge} from 'lodash';
 import {Config} from "./config";
+import {deepMerge} from "aws-cdk/lib/util";
 
 export class ConfigLoader<T extends Config> {
     readonly configDir: string;
@@ -14,27 +14,51 @@ export class ConfigLoader<T extends Config> {
         }
     }
 
-    private async getConfigFromFiles(env?: string): Promise<T> {
-        const defaultEnv = await this.getFromBase(this.base);
-        let overrideEnv = {};
-        if (env) {
-            overrideEnv = await this.getFromBase(this.getEnvBase(env));
-        }
-        return <T>merge(defaultEnv, overrideEnv);
+    public load(env?: string): T {
+        return this.getConfigFromFiles(env);
     }
 
-    private async getFromBase(base: string): Promise<object> {
+    public static convertStringToConfig<T extends Config>(value: string): T {
+        return <T>this.convertStringToJson(value);
+    }
+
+    public static convertStringToJson(value: string): object {
+        try {
+            return JSON.parse(value);
+        } catch (e) {
+            console.log("Error parsing JSON", value);
+        }
+        return {};
+    }
+
+    private getConfigFromFiles(env?: string): T {
+        const defaultEnv = this.getFromBase(this.base);
+        if (!env) {
+            // @ts-ignore
+            env = defaultEnv?.Environment ?? null;
+        }
+        let overrideEnv = {};
+        if (env) {
+            overrideEnv = this.getFromBase(this.getEnvBase(env ?? ''));
+        }
+        return <T>deepMerge({}, defaultEnv, overrideEnv);
+    }
+
+    private getFromBase(base: string): object {
         const jsFile = path.resolve(this.configDir, `${base}.js`);
         if (fs.existsSync(jsFile)) {
-            const results = await import(jsFile);
-            return results.default ?? {};
+            return this.loadJs(jsFile);
         }
         const jsonFile = path.resolve(this.configDir, `${base}.json`);
         if (fs.existsSync(jsonFile)) {
-            return JSON.parse(fs.readFileSync(jsonFile, 'utf8'));
+            return ConfigLoader.convertStringToJson(fs.readFileSync(jsonFile, 'utf8'));
         }
         console.log(`Environment '${base}' not found.`);
         return {};
+    }
+
+    private loadJs(file: string): object {
+        return require(file);
     }
 
     private getEnvBase(env: string): string {
@@ -44,16 +68,4 @@ export class ConfigLoader<T extends Config> {
         return `${this.base}.${env}`;
     }
 
-    public async load(env?: string): Promise<T> {
-        return await this.getConfigFromFiles(env);
-    }
-
-    public static convertStringToConfig<T extends Config>(value: string): T {
-        try {
-            return <T>JSON.parse(value);
-        } catch (e) {
-            console.log("Error parsing JSON", value);
-        }
-        return <T>{};
-    }
 }

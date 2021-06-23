@@ -12,14 +12,14 @@ export interface UtilsRunProps {
 
 export class Utils {
 
-    public static async getConfig<T extends Config>(configDir: string, configBase?: string, configEnv?: string): Promise<T> {
+    public static getConfig<T extends Config>(configDir: string, configBase?: string, configEnv?: string): T {
         const loader = new ConfigLoader<T>(configDir, configBase);
-        return await loader.load(configEnv);
+        return loader.load(configEnv);
     }
 
-    public static async run<T extends Config>(app: App, configDir: string, stack: Newable<ConfigStack<T>>, props?: UtilsRunProps): Promise<ConfigStack<T>> {
+    public static run<T extends Config>(app: App, configDir: string, stack: Newable<ConfigStack<T>>, props?: UtilsRunProps): ConfigStack<T> {
         const configEnv = props?.configEnv ?? app.node.tryGetContext('env');
-        let config: T = await this.getConfig<T>(configDir, props?.configBase, configEnv);
+        let config: T = this.getConfig<T>(configDir, props?.configBase, configEnv);
         return this.executeStack(app, stack, config, props);
     }
 
@@ -40,7 +40,6 @@ export class Utils {
         if (props?.idSuffix) {
             csProps.suffix = props.idSuffix
         }
-        ;
         return csProps;
     }
 

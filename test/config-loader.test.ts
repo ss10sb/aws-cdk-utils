@@ -24,7 +24,8 @@ describe('config loader', () => {
 
     it('should return empty object with non-existent env', () => {
         const l = new ConfigLoader(path.join(__dirname));
-        expect(l.load('none')).resolves.toEqual({});
+        const config = l.load('none');
+        expect(config).toEqual({});
     });
 
     it('should use default config for sdlc', () => {
@@ -38,8 +39,8 @@ describe('config loader', () => {
             Build: '0',
             Parameters: {}
         };
-
-        expect(loader.load('sdlc')).resolves.toEqual(defaultEnv);
+        const config = loader.load('sdlc');
+        expect(config).toEqual(defaultEnv);
     });
 
     it('should override default config for prod', () => {
@@ -53,8 +54,8 @@ describe('config loader', () => {
             Build: '0',
             Parameters: {}
         };
-
-        expect(loader.load('prod')).resolves.toEqual(defaultEnv);
+        const config = loader.load('prod');
+        expect(config).toEqual(defaultEnv);
     });
 
     it('should override default config for shared', () => {
@@ -69,7 +70,7 @@ describe('config loader', () => {
             Parameters: {}
         };
 
-        expect(loader.load('shared')).resolves.toEqual(defaultEnv);
+        expect(loader.load('shared')).toEqual(defaultEnv);
     });
 
     it('should use different config object', () => {
@@ -86,7 +87,7 @@ describe('config loader', () => {
             }
         };
         const typedLoader = new ConfigLoader<OtherConfig>(configDir);
-        expect(typedLoader.load('other')).resolves.toEqual(defaultEnv);
+        expect(typedLoader.load('other')).toEqual(defaultEnv);
     });
 
     it('should use js file when available', () => {
@@ -103,7 +104,7 @@ describe('config loader', () => {
             }
         };
         const typedLoader = new ConfigLoader<OtherConfig>(configDir);
-        expect(typedLoader.load('jsonly')).resolves.toEqual(defaultEnv);
+        expect(typedLoader.load('jsonly')).toEqual(defaultEnv);
     });
 
     it('should use function from js file', () => {
@@ -120,7 +121,7 @@ describe('config loader', () => {
             }
         };
         const typedLoader = new ConfigLoader<OtherConfig>(configDir);
-        expect(typedLoader.load('testfunc')).resolves.toEqual(defaultEnv);
+        expect(typedLoader.load('testfunc')).toEqual(defaultEnv);
     });
 
     it('should use aws from js file', () => {
@@ -137,7 +138,7 @@ describe('config loader', () => {
             }
         };
         const typedLoader = new ConfigLoader<OtherConfig>(configDir);
-        expect(typedLoader.load('aws')).resolves.toEqual(defaultEnv);
+        expect(typedLoader.load('aws')).toEqual(defaultEnv);
     });
 
     it('should use base instead of defaults when set', () => {
@@ -153,7 +154,7 @@ describe('config loader', () => {
             }
         };
         const typedLoader = new ConfigLoader<SecretConfig>(configDir, 'secrets');
-        expect(typedLoader.load('sdlc')).resolves.toEqual(defaultEnv);
+        expect(typedLoader.load('sdlc')).toEqual(defaultEnv);
     });
 
     it('should use base and mixin overrides instead of defaults when set', () => {
@@ -169,7 +170,37 @@ describe('config loader', () => {
             }
         };
         const typedLoader = new ConfigLoader<SecretConfig>(configDir, 'secrets');
-        expect(typedLoader.load('prod')).resolves.toEqual(defaultEnv);
+        expect(typedLoader.load('prod')).toEqual(defaultEnv);
+    });
+
+    it('should load multiple configs when multiple envs are requested', async () => {
+        const envProd = {
+            Name: 'secrets',
+            College: 'PCC',
+            Environment: 'prod',
+            Version: '0.0.0',
+            Parameters: {
+                secrets: {
+                    FOO: 'prod'
+                }
+            }
+        };
+        const envSdlc = {
+            Name: 'secrets',
+            College: 'PCC',
+            Environment: 'sdlc',
+            Version: '0.0.0',
+            Parameters: {
+                secrets: {
+                    FOO: 'sdlc'
+                }
+            }
+        };
+        const typedLoader = new ConfigLoader<SecretConfig>(configDir, 'secrets');
+        const prod = await typedLoader.load('prod');
+        const sdlc = await typedLoader.load('sdlc');
+        expect(prod).toEqual(envProd);
+        expect(sdlc).toEqual(envSdlc);
     });
 });
 
