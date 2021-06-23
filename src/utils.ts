@@ -17,13 +17,13 @@ export class Utils {
         return loader.load(configEnv);
     }
 
-    public static run<T extends Config>(app: App, configDir: string, stack: Newable<ConfigStack<T>>, props?: UtilsRunProps): ConfigStack<T> {
+    public static run<Stack extends ConfigStack<T>, T extends Config>(app: App, configDir: string, stack: Newable<Stack>, props?: UtilsRunProps): Stack {
         const configEnv = props?.configEnv ?? app.node.tryGetContext('env');
         let config: T = this.getConfig<T>(configDir, props?.configBase, configEnv);
         return this.executeStack(app, stack, config, props);
     }
 
-    public static executeStack<T extends Config>(app: App, stack: Newable<ConfigStack<T>>, config: T, props?: UtilsRunProps): ConfigStack<T> {
+    public static executeStack<Stack extends ConfigStack<T>, T extends Config>(app: App, stack: Newable<Stack>, config: T, props?: UtilsRunProps): Stack {
         Tags.of(app).add('College', config.College);
         Tags.of(app).add('Environment', config.Environment);
         const mainStackName = this.getMainStackName(config);

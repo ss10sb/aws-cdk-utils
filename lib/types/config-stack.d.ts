@@ -7,7 +7,7 @@ export interface ConfigStackProps {
 export declare class ConfigStack<T extends Config> extends cdk.Stack {
     config: T;
     readonly internalId: string;
-    protected configMutable: ConfigMutable<T> | undefined;
+    protected configMutable: ConfigMutable<T>;
     constructor(scope: cdk.Construct, id: string, stackProps: cdk.StackProps, config: T, configStackProps?: ConfigStackProps);
     get isProd(): boolean;
     mixNameWithId(name: string): string;

@@ -45,7 +45,24 @@ describe('utils', () => {
 
     it('should load extended config stack', () => {
         const app = new cdk.App();
-        expect(Utils.run<ExtendedConfig>(app, configDir, ExtendedStack)).toBeInstanceOf(ExtendedStack);
+        expect(Utils.run<ExtendedStack<ExtendedConfig>, ExtendedConfig>(app, configDir, ExtendedStack)).toBeInstanceOf(ExtendedStack);
+    });
+
+    it('should execute extended config stack', () => {
+        const app = new cdk.App();
+        const config: ExtendedConfig = {
+            AWSAccountId: "100",
+            AWSRegion: 'us-west-2',
+            Name: 'Stack',
+            College: 'PCC',
+            Environment: ConfigEnvironments.SDLC,
+            Version: "0.0.0",
+            foo: 'bar',
+            Parameters: {}
+        };
+        const stack = Utils.executeStack(app, ExtendedStack, config);
+        expect(stack).toBeInstanceOf(ExtendedStack);
+        expect(stack.config.foo).toBe('bar');
     });
 
     it('should load default config', async () => {
