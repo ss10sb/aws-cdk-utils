@@ -16,4 +16,5 @@ export declare class ConfigMutable<T extends Config> {
     protected retrieveConfigValueFromParamStore(): T | null;
     protected wantsToStoreConfig(config: T): boolean;
     protected wantsInitialize(config: T): boolean;
+    protected isEmpty(obj: Object): boolean;
 }

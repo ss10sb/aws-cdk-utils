@@ -2,7 +2,7 @@ import {Construct} from "@aws-cdk/core";
 import {IStringParameter} from "@aws-cdk/aws-ssm";
 import {Config} from "./config";
 import {ConfigParamStore} from "./config-param-store";
-import {merge} from 'lodash';
+import {deepMerge} from "aws-cdk/lib/util";
 
 export class ConfigMutable<T extends Config> {
     readonly scope: Construct;
@@ -21,8 +21,10 @@ export class ConfigMutable<T extends Config> {
     mutate(config: T): T {
         if (this.wantsToStoreConfig(config)) {
             if (!this.wantsInitialize(config)) {
-                const paramConfig = this.retrieveConfigValueFromParamStore()
-                config = this.mergeConfigs(config, paramConfig);
+                const paramConfig = this.retrieveConfigValueFromParamStore();
+                if (paramConfig && !this.isEmpty(paramConfig)) {
+                    config = paramConfig;
+                }
             }
             this.param = this.storeConfigToParamStore(config);
         }
@@ -34,7 +36,7 @@ export class ConfigMutable<T extends Config> {
     }
 
     protected mergeConfigs(config: T, paramConfig: T | null): T {
-        return <T>merge(config, paramConfig);
+        return <T>deepMerge(paramConfig || {}, config);
     }
 
     protected storeConfigToParamStore(config: T): IStringParameter | null {
@@ -56,5 +58,9 @@ export class ConfigMutable<T extends Config> {
 
     protected wantsInitialize(config: T): boolean {
         return config?.Initialize ?? false;
+    }
+
+    protected isEmpty(obj: Object): boolean {
+        return Object.keys(obj).length === 0;
     }
 }
