@@ -6,11 +6,12 @@ export declare class ConfigFetchStore<T extends Config> {
     readonly scope: Construct;
     readonly id: string;
     readonly configParamStore: ConfigParamStore;
-    param: IStringParameter | null;
     paramName: string;
     constructor(scope: Construct, id: string);
     fetch(): T;
     store(config: T): IStringParameter;
+    getArn(): string;
+    getName(): string;
     protected storeConfigToParamStore(config: T): IStringParameter | null;
     protected retrieveConfigValueFromParamStore(): T | null;
 }

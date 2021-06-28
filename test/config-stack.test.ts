@@ -55,14 +55,16 @@ describe('config stack', () => {
                 otherProp: 'foo'
             }
         }
+
         class ConfigStackWithParamStore<T extends Config> extends ConfigStack<T> {
             init() {
                 this.storeConfig(this.config);
             }
         }
+
         const stack = new ConfigStackWithParamStore<OtherConfig>(app, 'test', {}, buildConfig);
         expect(stack).toHaveResource('AWS::SSM::Parameter', {
-            Name: '/test-config/config',
+            Name: '/test/config',
             Type: 'String',
             Value: '{"Name":"test","Parameters":{"otherProp":"foo"}}',
         });

@@ -8,14 +8,12 @@ export class ConfigFetchStore<T extends Config> {
     readonly scope: Construct;
     readonly id: string;
     readonly configParamStore: ConfigParamStore;
-    public param: IStringParameter | null;
     public paramName: string = 'config';
 
     constructor(scope: Construct, id: string) {
         this.scope = scope;
         this.id = id;
         this.configParamStore = new ConfigParamStore(scope, id);
-        this.param = null;
     }
 
     fetch(): T {
@@ -26,13 +24,20 @@ export class ConfigFetchStore<T extends Config> {
         return this.configParamStore.store<T>(this.paramName, config);
     }
 
+    getArn(): string {
+        return this.configParamStore.getArn(this.paramName);
+    }
+
+    getName(): string {
+        return this.configParamStore.getParamName(this.paramName);
+    }
+
     protected storeConfigToParamStore(config: T): IStringParameter | null {
         return this.configParamStore.store<T>(this.paramName, config);
     }
 
     protected retrieveConfigValueFromParamStore(): T | null {
         try {
-            this.param = this.configParamStore.fetchStringAsPlaceholder(this.paramName);
             return this.configParamStore.fetchStringAsValue<T>(this.paramName);
         } catch (e) {
             console.log('Unable to retrieve parameter', e);

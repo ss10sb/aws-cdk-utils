@@ -21,7 +21,7 @@ export class ConfigStack<T extends Config> extends cdk.Stack {
         super(scope, id, stackProps);
         this.internalId = internalId;
         this.config = config;
-        this.configFetchStore = new ConfigFetchStore<T>(this, this.mixNameWithId('config'));
+        this.configFetchStore = new ConfigFetchStore<T>(this, internalId);
         this.preInit();
         this.init();
         this.postInit();
