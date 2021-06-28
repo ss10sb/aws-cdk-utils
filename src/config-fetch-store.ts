@@ -32,6 +32,7 @@ export class ConfigFetchStore<T extends Config> {
 
     protected retrieveConfigValueFromParamStore(): T | null {
         try {
+            this.param = this.configParamStore.fetchStringAsPlaceholder(this.paramName);
             return this.configParamStore.fetchStringAsValue<T>(this.paramName);
         } catch (e) {
             console.log('Unable to retrieve parameter', e);
