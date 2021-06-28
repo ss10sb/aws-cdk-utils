@@ -1,6 +1,7 @@
 import * as cdk from '@aws-cdk/core';
 import {Config} from './config';
-import {ConfigMutable} from "./config-mutable";
+import {ConfigFetchStore} from "./config-fetch-store";
+import {IStringParameter} from "@aws-cdk/aws-ssm";
 
 export interface ConfigStackProps {
     suffix?: string;
@@ -10,7 +11,7 @@ export class ConfigStack<T extends Config> extends cdk.Stack {
 
     public config: T;
     public readonly internalId: string;
-    protected configMutable!: ConfigMutable<T>;
+    protected readonly configFetchStore: ConfigFetchStore<T>;
 
     constructor(scope: cdk.Construct, id: string, stackProps: cdk.StackProps, config: T, configStackProps: ConfigStackProps = {}) {
         const internalId = id;
@@ -19,7 +20,8 @@ export class ConfigStack<T extends Config> extends cdk.Stack {
         }
         super(scope, id, stackProps);
         this.internalId = internalId;
-        this.config = this.mutateConfig(config);
+        this.config = config;
+        this.configFetchStore = new ConfigFetchStore<T>(this, this.mixNameWithId('config'));
         this.preInit();
         this.init();
         this.postInit();
@@ -45,8 +47,11 @@ export class ConfigStack<T extends Config> extends cdk.Stack {
         // do post init stuff here
     }
 
-    protected mutateConfig(config: T): T {
-        this.configMutable = new ConfigMutable<T>(this, this.mixNameWithId('config'));
-        return this.configMutable.mutate(config);
+    protected fetchConfig(): T {
+        return this.configFetchStore.fetch();
+    }
+
+    protected storeConfig(config: T): IStringParameter {
+        return this.configFetchStore.store(config);
     }
 }

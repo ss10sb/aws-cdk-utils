@@ -47,38 +47,24 @@ describe('config stack', () => {
         const stack = new ConfigStack<OtherConfig>(app, 'test', {}, buildConfig);
         expect(stack.config.Parameters.otherProp).toBe('foo');
     });
-    it('should store config in param store when not initialized', () => {
+    it('can store config in param store', () => {
         const app = new cdk.App();
-        const buildConfig = <Config>{
+        const buildConfig = <OtherConfig>{
             Name: 'test',
-            StoreConfig: true,
-            Initialize: false,
             Parameters: {
-                vpcId: 'abc123'
+                otherProp: 'foo'
             }
         }
-        const stack = new ConfigStack(app, 'test', {}, buildConfig);
+        class ConfigStackWithParamStore<T extends Config> extends ConfigStack<T> {
+            init() {
+                this.storeConfig(this.config);
+            }
+        }
+        const stack = new ConfigStackWithParamStore<OtherConfig>(app, 'test', {}, buildConfig);
         expect(stack).toHaveResource('AWS::SSM::Parameter', {
             Name: '/test-config/config',
             Type: 'String',
-            Value: '{"Name":"test","StoreConfig":true,"Parameters":{"vpcId":"abc123"}}',
-        });
-    });
-    it('should store config in param store when initialized', () => {
-        const app = new cdk.App();
-        const buildConfig = <Config>{
-            Name: 'test',
-            StoreConfig: true,
-            Initialize: true,
-            Parameters: {
-                vpcId: 'abc123'
-            }
-        }
-        const stack = new ConfigStack(app, 'test', {}, buildConfig);
-        expect(stack).toHaveResource('AWS::SSM::Parameter', {
-            Name: '/test-config/config',
-            Type: 'String',
-            Value: '{"Name":"test","StoreConfig":true,"Parameters":{"vpcId":"abc123"}}',
+            Value: '{"Name":"test","Parameters":{"otherProp":"foo"}}',
         });
     });
     it('should use suffix to create id', () => {

@@ -14,8 +14,6 @@ export interface Config {
     readonly College: string;
     readonly Environment: string;
     readonly Version?: string;
-    readonly StoreConfig?: boolean;
-    readonly Initialize?: boolean;
 
     readonly Parameters: ConfigParameters;
 }

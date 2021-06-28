@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`config fetch can store params 1`] = `
+Object {
+  "Resources": Object {
+    "testtestconfigparam203D2284": Object {
+      "Properties": Object {
+        "Name": "/test/config",
+        "Type": "String",
+        "Value": "{\\"Name\\":\\"test\\"}",
+      },
+      "Type": "AWS::SSM::Parameter",
+    },
+  },
+}
+`;
