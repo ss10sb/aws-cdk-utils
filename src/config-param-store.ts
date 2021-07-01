@@ -3,17 +3,11 @@ import {Config} from "./config";
 import {SsmUtils} from "./ssm-utils";
 import {IStringParameter, StringParameter} from "@aws-cdk/aws-ssm";
 import {ConfigLoader} from "./config-loader";
+import {NonConstruct} from "./non-construct";
 
-export class ConfigParamStore {
+export class ConfigParamStore extends NonConstruct {
 
     public storeKeys: String[] = ['Name', 'College', 'Environment', 'Parameters'];
-    public readonly scope: Construct;
-    public readonly id: string;
-
-    constructor(scope: Construct, id: string) {
-        this.scope = scope;
-        this.id = id;
-    }
 
     store<T extends Config>(name: string, config: T): StringParameter {
         let stored: { [key: string]: any } = {};

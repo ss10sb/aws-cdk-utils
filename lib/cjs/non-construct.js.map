@@ -1,0 +1,1 @@
+{"version":3,"file":"non-construct.js","sourceRoot":"","sources":["../../src/non-construct.ts"],"names":[],"mappings":";;;AAEA,MAAa,YAAY;IAIrB,YAAY,KAAgB,EAAE,EAAU;QACpC,IAAI,CAAC,KAAK,GAAG,KAAK,CAAC;QACnB,IAAI,CAAC,EAAE,GAAG,EAAE,CAAC;IACjB,CAAC;IAED,aAAa,CAAC,IAAY;QACtB,OAAO,GAAG,IAAI,CAAC,EAAE,IAAI,IAAI,EAAE,CAAC;IAChC,CAAC;CACJ;AAZD,oCAYC"}

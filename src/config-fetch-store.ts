@@ -3,16 +3,14 @@ import {IStringParameter} from "@aws-cdk/aws-ssm";
 import {Config} from "./config";
 import {ConfigParamStore} from "./config-param-store";
 import {deepMerge} from "aws-cdk/lib/util";
+import {NonConstruct} from "./non-construct";
 
-export class ConfigFetchStore<T extends Config> {
-    readonly scope: Construct;
-    readonly id: string;
+export class ConfigFetchStore<T extends Config> extends NonConstruct {
     readonly configParamStore: ConfigParamStore;
     public paramName: string = 'config';
 
     constructor(scope: Construct, id: string) {
-        this.scope = scope;
-        this.id = id;
+        super(scope, id);
         this.configParamStore = new ConfigParamStore(scope, id);
     }
 
