@@ -27,12 +27,14 @@ export class Utils {
         Tags.of(app).add('College', config.College);
         Tags.of(app).add('Environment', config.Environment);
         const mainStackName = this.getMainStackName(config);
-        return new stack(app, mainStackName, {
+        const s: Stack = new stack(app, mainStackName, {
             env: {
                 account: config?.AWSAccountId ?? process.env.CDK_DEFAULT_ACCOUNT,
                 region: config?.AWSRegion ?? process.env.CDK_DEFAULT_REGION
             }
         }, config, this.getConfigStackProps(props));
+        s.exec();
+        return s;
     }
 
     protected static getConfigStackProps(props?: UtilsRunProps): ConfigStackProps {

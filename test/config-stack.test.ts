@@ -17,6 +17,7 @@ describe('config stack', () => {
             Name: 'test'
         }
         const stack = new ConfigStack(app, 'test', {}, buildConfig);
+        stack.exec();
         expect(stack.isProd).toBe(false);
     });
     it('should be prod when env is prod', () => {
@@ -26,6 +27,7 @@ describe('config stack', () => {
             Environment: 'prod'
         }
         const stack = new ConfigStack(app, 'test', {}, buildConfig);
+        stack.exec();
         expect(stack.isProd).toBe(true);
     });
     it('should mix id with the name', () => {
@@ -34,6 +36,7 @@ describe('config stack', () => {
             Name: 'test'
         }
         const stack = new ConfigStack(app, 'test', {}, buildConfig);
+        stack.exec();
         expect(stack.mixNameWithId('foo')).toBe('test-foo');
     });
     it('should use typed config', () => {
@@ -57,15 +60,17 @@ describe('config stack', () => {
         }
 
         class ConfigStackWithParamStore<T extends Config> extends ConfigStack<T> {
-            init() {
+            exec() {
                 this.storeConfig(this.config);
             }
         }
 
         const stack = new ConfigStackWithParamStore<OtherConfig>(app, 'test', {}, buildConfig);
+        stack.exec();
         expect(stack).toHaveResource('AWS::SSM::Parameter', {
             Name: '/test/config',
             Type: 'String',
+            Tier: 'Standard',
             Value: '{"Name":"test","Parameters":{"otherProp":"foo"}}',
         });
     });
@@ -76,6 +81,7 @@ describe('config stack', () => {
             Parameters: {}
         }
         const stack = new ConfigStack(app, 'test', {}, buildConfig, {suffix: 'bar'});
+        stack.exec();
         expect(stack.node.id).toBe('test-bar');
         expect(stack.internalId).toBe('test');
     });

@@ -12,9 +12,7 @@ export declare class ConfigStack<T extends Config> extends cdk.Stack {
     constructor(scope: cdk.Construct, id: string, stackProps: cdk.StackProps, config: T, configStackProps?: ConfigStackProps);
     get isProd(): boolean;
     mixNameWithId(name: string): string;
-    preInit(): void;
-    init(): void;
-    postInit(): void;
+    exec(): void;
     protected fetchConfig(): T;
     protected storeConfig(config: T): IStringParameter;
 }

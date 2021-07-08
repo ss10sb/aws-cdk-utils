@@ -22,9 +22,6 @@ export class ConfigStack<T extends Config> extends cdk.Stack {
         this.internalId = internalId;
         this.config = config;
         this.configFetchStore = new ConfigFetchStore<T>(this, internalId);
-        this.preInit();
-        this.init();
-        this.postInit();
     }
 
     get isProd(): boolean {
@@ -35,16 +32,8 @@ export class ConfigStack<T extends Config> extends cdk.Stack {
         return `${this.internalId}-${name}`;
     }
 
-    preInit(): void {
-        // do pre init stuff here
-    }
-
-    init(): void {
-        // do stuff here
-    }
-
-    postInit(): void {
-        // do post init stuff here
+    exec(): void {
+        // do the work to build the stack here
     }
 
     protected fetchConfig(): T {
