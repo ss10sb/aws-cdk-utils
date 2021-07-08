@@ -45,7 +45,7 @@ export class SsmUtils {
     }
 
     public static getParamTier(value: string): ParameterTier {
-        if (new Blob([value]).size >= SsmUtils.advancedSize) {
+        if (Buffer.byteLength(value, 'utf8') >= SsmUtils.advancedSize) {
             return ParameterTier.ADVANCED;
         }
         return ParameterTier.STANDARD;
