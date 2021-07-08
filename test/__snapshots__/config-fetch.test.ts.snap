@@ -6,6 +6,7 @@ Object {
     "testtestconfigparam203D2284": Object {
       "Properties": Object {
         "Name": "/test/config",
+        "Tier": "Standard",
         "Type": "String",
         "Value": "{\\"Name\\":\\"test\\"}",
       },
