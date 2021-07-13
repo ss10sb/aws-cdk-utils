@@ -32,7 +32,7 @@ export class ConfigStack<T extends Config> extends cdk.Stack {
         return `${this.internalId}-${name}`;
     }
 
-    exec(): void {
+    exec() {
         // do the work to build the stack here
     }
 
