@@ -11,7 +11,7 @@ export class ConfigStack<T extends Config> extends cdk.Stack {
 
     public config: T;
     public readonly internalId: string;
-    protected readonly configFetchStore: ConfigFetchStore<T>;
+    public readonly configFetchStore: ConfigFetchStore<T>;
 
     constructor(scope: cdk.Construct, id: string, stackProps: cdk.StackProps, config: T, configStackProps: ConfigStackProps = {}) {
         const internalId = id;

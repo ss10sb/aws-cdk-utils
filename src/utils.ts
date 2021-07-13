@@ -24,17 +24,21 @@ export class Utils {
     }
 
     public static executeStack<Stack extends ConfigStack<T>, T extends Config>(app: App, stack: Newable<Stack>, config: T, props?: UtilsRunProps): Stack {
+        const s: Stack = Utils.createStack(app, stack, config, props);
+        s.exec();
+        return s;
+    }
+
+    public static createStack<Stack extends ConfigStack<T>, T extends Config>(app: App, stack: Newable<Stack>, config: T, props?: UtilsRunProps): Stack {
         Tags.of(app).add('College', config.College);
         Tags.of(app).add('Environment', config.Environment);
         const mainStackName = this.getMainStackName(config);
-        const s: Stack = new stack(app, mainStackName, {
+        return new stack(app, mainStackName, {
             env: {
                 account: config?.AWSAccountId ?? process.env.CDK_DEFAULT_ACCOUNT,
                 region: config?.AWSRegion ?? process.env.CDK_DEFAULT_REGION
             }
         }, config, this.getConfigStackProps(props));
-        s.exec();
-        return s;
     }
 
     protected static getConfigStackProps(props?: UtilsRunProps): ConfigStackProps {
