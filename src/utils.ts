@@ -41,6 +41,15 @@ export class Utils {
         }, config, this.getConfigStackProps(props));
     }
 
+    public static fromEnvironments<Stack extends ConfigStack<T>, T extends Config>(app: App, config: T, stack: Newable<Stack>, props?: UtilsRunProps): Stack[] {
+        let stacks: Stack[] = [];
+        const environments = config.Environments ?? [];
+        for (const envConfig of environments) {
+            stacks.push(Utils.executeStack(app, stack, envConfig, props));
+        }
+        return stacks;
+    }
+
     protected static getConfigStackProps(props?: UtilsRunProps): ConfigStackProps {
         let csProps: ConfigStackProps = {};
         if (props?.idSuffix) {
