@@ -7,7 +7,7 @@ import {NonConstruct} from "./non-construct";
 
 export class ConfigParamStore extends NonConstruct {
 
-    public storeKeys: String[] = ['Name', 'College', 'Environment', 'Parameters'];
+    public storeKeys: String[] = ['Name', 'College', 'Environment', 'Parameters', 'Environments'];
     public advancedSize: number = (1024 * 4);
 
     store<T extends Config>(name: string, config: T): StringParameter {
