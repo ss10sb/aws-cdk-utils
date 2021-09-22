@@ -16,6 +16,7 @@ export interface Config {
 }
 export interface ConfigParameters {
     readonly vpcId?: string;
+    readonly albArn?: string;
 }
 export interface EnvConfig extends Config {
     readonly Parameters: EnvParameters;
