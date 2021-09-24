@@ -31,6 +31,16 @@ describe('utils', () => {
         expect(Utils.getMainStackName(config)).toEqual('pcc-prod-test');
     });
 
+    it('can add NameSuffix from config', () => {
+        const config = <Config>{
+            College: 'PCC',
+            Environment: 'prod',
+            Name: 'test',
+            NameSuffix: 'foo'
+        }
+        expect(Utils.getMainStackName(config)).toEqual('pcc-prod-test-foo');
+    });
+
     it('should create stack name from config and suffix', async () => {
         const app = new cdk.App();
         const stack = await Utils.run(app, configDir, ConfigStack, {idSuffix: 'suffix'});

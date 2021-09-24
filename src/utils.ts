@@ -59,10 +59,17 @@ export class Utils {
     }
 
     public static getMainStackName(config: Config): string {
-        return `${this.getBaseName(config)}-${config.Name}`;
+        let parts: string[] = [
+            this.getBaseName(config),
+            config.Name
+        ];
+        if (config.NameSuffix) {
+            parts.push(config.NameSuffix);
+        }
+        return parts.join('-');
     }
 
     public static getBaseName(config: Config): string {
-        return `${config.College.toLowerCase()}-${config.Environment.toLowerCase()}`;
+        return [config.College.toLowerCase(), config.Environment.toLowerCase()].join('-');
     }
 }

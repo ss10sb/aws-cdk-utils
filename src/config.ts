@@ -9,6 +9,7 @@ export interface Config {
     readonly AWSAccountId?: string;
     readonly AWSRegion?: string;
     readonly Name: string;
+    readonly NameSuffix?: string;
     readonly College: string;
     readonly Environment: string;
     readonly Version?: string;
