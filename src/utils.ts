@@ -8,18 +8,19 @@ export interface UtilsRunProps {
     idSuffix?: string;
     configBase?: string;
     configEnv?: string;
+    configSuffix?: string;
 }
 
 export class Utils {
 
-    public static getConfig<T extends Config>(configDir: string, configBase?: string, configEnv?: string): T {
+    public static getConfig<T extends Config>(configDir: string, configBase?: string, configEnv?: string, configSuffix?: string): T {
         const loader = new ConfigLoader<T>(configDir, configBase);
-        return loader.load(configEnv);
+        return loader.load(configEnv, configSuffix);
     }
 
     public static run<Stack extends ConfigStack<T>, T extends Config>(app: App, configDir: string, stack: Newable<Stack>, props?: UtilsRunProps): Stack {
         const configEnv = props?.configEnv ?? app.node.tryGetContext('env');
-        let config: T = this.getConfig<T>(configDir, props?.configBase, configEnv);
+        let config: T = this.getConfig<T>(configDir, props?.configBase, configEnv, props?.configSuffix);
         return this.executeStack(app, stack, config, props);
     }
 

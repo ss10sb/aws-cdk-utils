@@ -14,8 +14,8 @@ export class ConfigLoader<T extends Config> {
         }
     }
 
-    public load(env?: string): T {
-        return this.getConfigFromFiles(env);
+    public load(env?: string, suffix?: string): T {
+        return this.getConfigFromFiles(env, suffix);
     }
 
     public static convertStringToConfig<T extends Config>(value: string): T {
@@ -31,17 +31,22 @@ export class ConfigLoader<T extends Config> {
         return {};
     }
 
-    private getConfigFromFiles(env?: string): T {
+    private getConfigFromFiles(env?: string, suffix?: string): T {
         const defaultEnv = this.getFromBase(this.base);
         if (!env) {
             // @ts-ignore
             env = defaultEnv?.Environment ?? null;
         }
         let overrideEnv = {};
+        let overrideEnvSuffix = {};
         if (env) {
-            overrideEnv = this.getFromBase(this.getEnvBase(env ?? ''));
+            const envBase = this.getEnvBase(env);
+            overrideEnv = this.getFromBase(envBase);
+            if (suffix) {
+                overrideEnvSuffix = this.getFromBase(this.getEnvSuffixBase(envBase, suffix));
+            }
         }
-        return <T>deepMerge({}, defaultEnv, overrideEnv);
+        return <T>deepMerge({}, defaultEnv, overrideEnv, overrideEnvSuffix);
     }
 
     private getFromBase(base: string): object {
@@ -65,7 +70,10 @@ export class ConfigLoader<T extends Config> {
         if (this.base === 'defaults') {
             return env;
         }
-        return `${this.base}.${env}`;
+        return [this.base, env].join('.');
     }
 
+    private getEnvSuffixBase(base: string, suffix: string): string {
+        return [base, suffix].join('.');
+    }
 }

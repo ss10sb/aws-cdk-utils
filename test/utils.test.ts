@@ -143,6 +143,25 @@ describe('utils', () => {
         expect(stack.config).toEqual(expected);
     });
 
+    it('should accept configBase and configEnv and configSuffix', async () => {
+        const expected = {
+            Name: 'secrets',
+            NameSuffix: 'foo',
+            College: 'PCC',
+            Environment: ConfigEnvironments.SDLC,
+            Version: "0.0.0",
+            Parameters: {
+                secrets: {
+                    FOO: 'sdlc'
+                }
+            }
+        };
+        const app = new cdk.App();
+        const stack = await Utils.run(app, configDir, ConfigStack, {configBase: 'secrets', configEnv: 'sdlc', configSuffix: 'foo'});
+        expect(stack.node.id).toEqual('pcc-sdlc-secrets-foo');
+        expect(stack.config).toEqual(expected);
+    });
+
     it('should accept configBase and configEnv prod', async () => {
         const expected = {
             Name: 'secrets',
