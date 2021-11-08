@@ -33,6 +33,7 @@ export class Utils {
     public static createStack<Stack extends ConfigStack<T>, T extends Config>(app: App, stack: Newable<Stack>, config: T, props?: UtilsRunProps): Stack {
         Tags.of(app).add('College', config.College);
         Tags.of(app).add('Environment', config.Environment);
+        Tags.of(app).add('App', config.Name);
         const mainStackName = this.getMainStackName(config);
         return new stack(app, mainStackName, {
             env: {
